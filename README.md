@@ -1,19 +1,37 @@
-# Express application
+# Docker-todo-app
 
-Install dependencies with `npm install`
+## learning from this project
+1. how to create **docker image**
+2. how to security concern with using low previleges.
+3. how to upload only important file to docker by using **.dockerignore**
 
-Run with `npm start`
+## to run this project
+1. clone this repository and enter this repository.
+```
+git clone https://github.com/tusharnagar17/docker-todo-app.git && cd docker-todo-app
+```
 
-Or in development mode with `npm run dev`
+2. build and then run 
+```
+docker build . -t docker-todo-app
 
-# Visit counter
+docker run -it -p 3000:3000 docker-todo-app
+```
 
-When running the server, visit http://localhost:3000 to see visit counter, or give environment variable `PORT` to change the port.
+3. sent GET request to localhost:3000
 
-# MongoDB
 
-The application has /todos crud which requires a MongoDB. Pass connection url with env `MONGO_URL`
+## Here the main file `Dockerfile`
+```
+FROM node:16
+  
+WORKDIR /usr/src/app
 
-# Redis
+COPY --chown=node:node . .
+RUN npm ci 
 
-Pass connection url with env `REDIS_URL`
+ENV DEBUG=playground:*
+  
+USER node
+CMD npm start
+```
